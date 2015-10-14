@@ -1,0 +1,17 @@
+<!-- -*- mode: XML -*- -->
+
+<launch>
+    <!-- Load controller configuration to parameter server -->
+    <rosparam file="$(find servo_torque)/config/torquecontroller.yaml" command="load"/>    
+        
+
+    <node name="dynamixel_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port=dynamixel_port                
+                --type=simple
+                  torque_controller"
+          output="screen"
+    />
+    
+  </node>
+</launch>

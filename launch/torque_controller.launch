@@ -1,0 +1,6 @@
+<launch>        
+	<include file="$(find servo_torque)/launch/controller_manager.launch" />
+	<include file="$(find servo_torque)/launch/controller_spawner.launch" />
+	
+</launch>
+

@@ -1,0 +1,43 @@
+
+<launch>
+ <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" required="true" output="screen">
+        <rosparam>
+            namespace: dxl_manager
+            serial_ports:
+                dynamixel_port1:
+                    port_name: "/dev/ttyUSB0"
+                    baud_rate: 500000
+                    min_motor_id: 1
+                    max_motor_id: 20
+                    update_rate: 50
+
+        </rosparam>
+
+  </node>
+
+ <!-- Load controller configuration to parameter server -->
+    <rosparam file="$(find canopen_driver)/config/dynamixel_joint_controllers_servo.yaml" command="load"/>
+    <rosparam file="$(find canopen_driver)/config/metacontroller.yaml" command="load"/>
+    <include file="$(find dynamixel_joint_states_publisher)/launch/joint_states_publisher.launch" />
+
+
+ <node name="dynamixel_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port=dynamixel_port1                
+                --type=simple
+		/flexipod/front_left_body_coxa"
+          output="screen"
+    />
+
+<node name="dynamixel_controller_spawner_meta" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port=dynamixel_port1                
+                --type=meta
+		servometacontroller
+		/flexipod/front_left_body_coxa"
+          output="screen"
+    />
+
+
+
+</launch>

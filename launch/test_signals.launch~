@@ -1,0 +1,15 @@
+<launch>
+
+  <env name="ROSCONSOLE_CONFIG_FILE" 
+       value="$(find canopen_driver)/custom_rosconsole.conf"/>
+
+ <node name="signal_generator" pkg="canopen_driver" type="signal_generator_node" output="screen" >
+    <rosparam file="$(find canopen_driver)/config/signals.yaml" 
+              command="load"/>
+  </node>
+ 
+
+ 
+
+
+</launch>
